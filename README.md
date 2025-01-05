@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd("FileType", {
    callback = function()
       vim.keymap.set('i', "=", function()
          return in_multiline_table_constructor() and "=,<Left>" or "="
-      end, { expr = true })
+      end, { expr = true, buffer = true })
       vim.keymap.set('i', "<BS>", function()
          -- get cursor position and check if it's preceding a comma and following a equal sign
          if not in_multiline_table_constructor() then return "<BS>" end
@@ -23,7 +23,7 @@ vim.api.nvim_create_autocmd("FileType", {
          local next_char = line:sub(cursor_col + 1, cursor_col + 1)
          return (prev_char == "=" and next_char == ",")
              and "<Right><BS><BS>" or "<BS>"
-      end, { expr = true })
+      end, { expr = true, buffer = true })
    end,
 })
 ```
